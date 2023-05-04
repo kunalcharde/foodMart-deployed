@@ -51,6 +51,12 @@ const columns = [
 ];
 
 
+// const navigate = useNavigate()
+
+  let handleFunction =(row)=>{
+    // navigate(`/details/:${row.id}`)
+  }
+
 
 export default function DataGridDemo() {
   const [rows, setRows] = React.useState([]);
@@ -94,11 +100,7 @@ export default function DataGridDemo() {
     setData([...rows,...temp])
   }
 
-  const navigate = useNavigate()
-
-  let handleFunction =(row)=>{
-    navigate(`/details/:${row.id}`)
-  }
+  
   
   return (
     <Box sx={{ height: '800px', width: '100%' }}>
