@@ -7,62 +7,15 @@ import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useStore } from '../../Store/FoodDataStore';
 import { useNavigate } from 'react-router-dom';
-const columns = [
-  {
-    field: 'avatar',
-    headerName: 'Product',
-    width: 150,
-    renderCell: (params) => {
-      console.log('value', params);
-      return <Avatar src={params.row.avatar} />;
-    },
-  },
-  {
-    field: 'name',
-    headerName: 'Product Name',
-    width: 150,
-  },
-  {
-    field: 'category',
-    headerName: 'Category',
-    width: 150,
-  },
-
-  {
-    field: 'stock',
-    headerName: 'Stock',
-    type: 'number',
-    width: 150,
-  },
-  {
-    field: 'price',
-    headerName: 'Price',
-    tyepe: 'number',
-    width: 150,
-  },
-  {
-    headerName: 'Product Details',
-    width: 100,
-    renderCell: ({ row }) =>
-      <Button onClick={() => handleFunction(row)}>
-         view Detail
-      </Button>
-  },
-];
-
-
-// const navigate = useNavigate()
-
-  let handleFunction =(row)=>{
-    // navigate(`/details/:${row.id}`)
-  }
-
 
 export default function DataGridDemo() {
+
   const [rows, setRows] = React.useState([]);
   const [highestPageCount, setHighestPageCount] = React.useState(0);
   const [totalResult, setTotalResult] = React.useState(0);
+
   const setData = useStore((state) => state.setData)
+
   const fetchingData = async (page) => {
     let fetchData = await fetch(
       `https://catalog-management-system-kxyaws5ixa-uc.a.run.app/cms/products?page=${page}`
@@ -72,7 +25,6 @@ export default function DataGridDemo() {
     setTotalResult(response.totalResults);
     createRowData(response.products);
   };
-
   React.useEffect(() => {
     fetchingData(1);
   }, []);
@@ -100,8 +52,55 @@ export default function DataGridDemo() {
     setData([...rows,...temp])
   }
 
+  const columns = [
+    {
+      field: 'avatar',
+      headerName: 'Product',
+      width: 150,
+      renderCell: (params) => {
+        // console.log('value', params);
+        return <Avatar src={params.row.avatar} />;
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Product Name',
+      width: 150,
+    },
+    {
+      field: 'category',
+      headerName: 'Category',
+      width: 150,
+    },
   
-  
+    {
+      field: 'stock',
+      headerName: 'Stock',
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      tyepe: 'number',
+      width: 150,
+    },
+    {
+      headerName: 'Product Details',
+      width: 100,
+      renderCell: ({ row }) =>
+        <Button onClick={() => handleFunction(row)}>
+           view Detail
+        </Button>
+    },
+  ];
+
+  const navigate = useNavigate()
+    let handleFunction =(row)=>{
+      // console.log(row.id)
+      navigate(`/details/:${row.id}`)
+    }
+ 
   return (
     <Box sx={{ height: '800px', width: '100%' }}>
       <DataGrid

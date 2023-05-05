@@ -10,4 +10,5 @@ function FoodMartHomePage() {
     </div>
   );
 }
+
 export default FoodMartHomePage;
